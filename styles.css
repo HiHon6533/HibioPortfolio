@@ -49,6 +49,52 @@ a { text-decoration: none; color: inherit; transition: 0.2s; }
   line-height: 1;
   letter-spacing: -1px;
 }
+
+/* --- HEADER LAYOUT --- */
+/* CSS cho kiểu Combo */
+.header-inner {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Logo đứng cách tên 20px */
+}
+
+/* --- SỬA LẠI ĐOẠN NÀY --- */
+.logo-box {
+  /* 1. Đổi nền trắng thành trong suốt */
+  background: transparent;
+
+  /* 2. Thêm viền đen bo góc */
+  /* Bạn có thể thay #222 thành #000 nếu muốn đen tuyền */
+  border: 2px solid #222;
+  border-radius: 12px; /* Giữ độ bo góc cũ */
+
+  /* 3. Giữ nguyên cấu trúc hộp */
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* 4. Xóa bỏ bóng mờ (box-shadow) để nhìn gọn gàng hơn */
+  /* box-shadow: 0 4px 12px rgba(0,0,0,0.05); <-- Dòng cũ đã bỏ */
+}
+
+.main-nav { margin-left: auto; } /* Đẩy menu sang phải cùng */
+
+/* --- LOGO ẢNH --- */
+.site-logo {
+  width: 57px; /* Kích thước ảnh logo bên trong (nhỏ hơn khung) */
+  height: auto;
+  object-fit: contain;
+}
+
+/* --- SITE TITLE (Tiêu đề) --- */
+.site-title {
+  margin: 0; /* Xóa margin mặc định để căn giữa cho đẹp */
+  /* Nếu muốn tiêu đề nằm sát logo hơn thì thêm: margin-right: auto; */
+}
+
+
 /* --- NAVIGATION --- */
 .main-nav {
   display: flex;
