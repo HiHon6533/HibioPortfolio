@@ -1,0 +1,647 @@
+:root {
+  /* Màu nền giống ảnh mẫu hơn */
+  --bg: #F3F0EB;
+  --text: #1a1a1a;
+  --muted: #555;
+  --accent: #000;
+  --container: 1200px; /* Mở rộng một chút để chứa đủ 3 card */
+  --card-bg: #ffffff;
+  /* Font Montserrat là lựa chọn tốt, nhưng cần chỉnh weight */
+  font-family: 'Montserrat', sans-serif;
+}
+
+/* --- GLOBAL LAYOUT --- */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: var(--container);
+  margin: 0 auto;
+  padding: 0 40px;
+}
+
+h1, h2, h3, h4 { margin: 0; font-weight: 600; color: #000; }
+p { margin: 0; }
+a { text-decoration: none; color: inherit; transition: 0.2s; }
+
+/* --- HEADER --- */
+.site-header { padding: 30px 0 0 0; }
+
+.header-inner {
+  display: flex;
+  align-items: flex-end; /* Căn chỉnh theo đáy chữ */
+  justify-content: space-between;
+  padding-bottom: 20px;
+  border-bottom: 1px solid #dcdcdc; /* Đường kẻ chuyển vào trong header */
+}
+
+.site-title {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  font-size: 50px; /* Chữ to hơn */
+  line-height: 1;
+  letter-spacing: -1px;
+}
+/* --- NAVIGATION --- */
+.main-nav {
+  display: flex;
+  gap: 40px;
+}
+
+.main-nav a {
+  font-size: 23px;    /* Giữ nguyên cỡ chữ to của bạn */
+  font-weight: 500;
+  color: #333;
+  text-decoration: none;
+  padding-bottom: 8px; /* Khoảng cách từ chữ xuống gạch chân */
+  position: relative;  /* Bắt buộc có để định vị gạch chân */
+}
+
+/* Tạo thanh gạch chân ẩn (độ rộng = 0) */
+.main-nav a::after {
+  content: '';
+  position: absolute;
+  width: 0;           /* Ban đầu ẩn đi */
+  height: 2px;        /* Độ dày của đường kẻ */
+  bottom: 0;
+  left: 0;
+  background-color: #000; /* Màu đường kẻ */
+  transition: width 0.3s ease-in-out; /* Hiệu ứng trượt mượt 0.3 giây */
+}
+
+/* Khi di chuột vào: Đổi màu chữ + Kéo dài thanh gạch chân */
+.main-nav a:hover {
+  color: #000;
+}
+
+.main-nav a:hover::after {
+  width: 100%; /* Chạy từ 0% ra 100% */
+}
+
+/* Ẩn thẻ hr cũ */
+.divider { display: none; }
+
+/* --- HERO (AVATAR) --- */
+.hero {
+  padding: 30px 0 10px;
+  display: flex;
+  justify-content: center;
+}
+
+.avatar-wrap {
+  width: 370px;
+  height: 370px;
+  border-radius: 50%;
+  overflow: hidden;
+  /* Ảnh mẫu không có viền border lộ liễu */
+}
+
+.avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* --- INTRO SECTION --- */
+.intro-section {
+  display: flex;
+  gap: 30px; /* Đây là khoảng cách giữa Chữ và Icon. Muốn gần hơn nữa thì giảm số này (ví dụ 20px) */
+  padding-bottom: 60px;
+  flex-start: center; /* (Tùy chọn) Căn giữa icon với khối chữ cho đẹp */
+}
+
+.intro-left {
+  flex: 1; /* QUAN TRỌNG: Để chữ tự giãn nở, không ép cứng 85% nữa */
+}
+
+.intro-right {
+  flex: 0 0 auto; /* Icon chỉ chiếm diện tích vừa đủ, không bị đẩy ra xa */
+  display: flex;
+  justify-content: flex-start; /* QUAN TRỌNG: Canh icon về phía bên trái (sát lại gần chữ) */
+}
+
+.intro-left h2 {
+  font-size: 42px;
+  margin-bottom: 16px;
+  letter-spacing: -0.5px;
+}
+
+.lead {
+  font-size: 16px;
+  color: #444;
+  line-height: 1.7;
+  margin-bottom: 30px;
+  max-width: 100%;
+  text-align: justify;
+  
+  /* Đảm bảo chiều cao không bị giật khi chữ đang chạy */
+  min-height: 120px; 
+}
+
+/* Thêm hiệu ứng dấu nháy con trỏ nhấp nháy */
+.cursor::after {
+  content: '|';
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+  color: #000;
+  font-weight: bold;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.btn-outline {
+  background: transparent;
+  border: 1px solid #333;
+  padding: 12px 24px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.btn-outline:hover { background: #000; color: #fff; }
+
+/* --- SOCIAL ICONS --- */
+.socials {
+  display: flex;
+  gap: 16px;
+}
+
+/* Khung tròn */
+.social {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center; /* Căn giữa dọc */
+  justify-content: center; /* Căn giữa ngang */
+  overflow: hidden; /* Cắt bỏ phần ảnh thừa nếu có */
+}
+
+/* Chỉnh kích thước ảnh logo của bạn */
+.social-img {
+  width: 50px;   /* Độ to của logo (bằng khoảng 1/2 khung tròn là đẹp) */
+  height: auto;  /* Giữ đúng tỷ lệ ảnh */
+  object-fit: contain;
+}
+
+/* Màu nền đỏ đặc trưng của Google/Gmail */
+.social.gmail {
+  background-color: #FFFFFF; 
+}
+
+/* --- SEPARATORS (Đường kẻ phân cách) --- */
+.section-sep {
+  border: 0;
+  height: 1px; /* Độ dày của đường kẻ */
+  background-color: #dcdcdc; /* Màu sắc */
+  
+  width: 60%; /* QUAN TRỌNG: Độ dài của đường kẻ (60% chiều ngang trang web) */
+  margin: 0 auto; /* QUAN TRỌNG: Tự động căn giữa */
+  
+  opacity: 1; /* Làm mờ nhẹ đi một chút cho tinh tế (tùy chọn) */
+}
+
+/* --- SKILLS SECTION (Sửa lại layout nhiều nhất) --- */
+/* --- SKILLS SECTION (Nâng cấp) --- */
+.skills-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  padding: 80px 0;
+}
+
+.skills-left {
+  /* Giữ cố định khi cuộn nếu nội dung bên phải dài (tùy chọn) */
+  position: sticky;
+  top: 40px;
+  height: fit-content;
+  position: static;
+}
+
+.eyebrow {
+  display: block;
+  font-size: 13px; /* Tăng nhẹ size */
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+  color: #888;
+}
+
+.section-title {
+  font-size: 48px;
+  margin-bottom: 16px;
+  letter-spacing: -1.5px; /* Chữ xích lại gần nhau xíu cho hiện đại */
+  line-height: 1.1;
+  color: #111;
+}
+
+/* Nội dung mô tả bên trái */
+.skills-left .muted {
+  color: #666;
+  font-size: 16px;
+  line-height: 1.7;
+  max-width: 90%;
+  
+  /* --- THÊM 2 DÒNG NÀY --- */
+  min-height: 100px; /* Giữ chiều cao cố định để không bị giật layout khi chữ chạy */
+  display: block;
+  
+}
+
+.cursor::after {
+  content: '|';
+  display: inline-block;
+  margin-left: 2px;
+  animation: blink 0.7s infinite;
+  color: #000;
+  font-weight: bold;
+}
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* Grid bên phải */
+.skills-right.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 30px; /* Giảm gap một chút vì sẽ thêm padding cho item */
+}
+
+/* --- SKILL ITEM (PHẦN QUAN TRỌNG NHẤT) --- */
+.skill-item {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  
+  /* Thêm phần này để tạo khung thẻ */
+  padding: 30px; 
+  border-radius: 16px; /* Bo góc mềm mại */
+  background-color: transparent; /* Nền trong suốt ban đầu */
+  border: 1px solid transparent; /* Viền ẩn */
+  transition: all 0.3s ease; /* Chuyển động mượt */
+}
+
+/* Hiệu ứng khi di chuột vào từng Skill */
+.skill-item:hover {
+  background-color: #fff; /* Nền trắng hiện lên */
+  transform: translateY(-5px); /* Nổi lên trên */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Đổ bóng nhẹ */
+  border-color: rgba(0,0,0,0.05); /* Viền mờ hiện ra */
+}
+
+/* Số thứ tự (01, 02) */
+.skill-num {
+  font-family: 'Poppins', sans-serif;
+  font-size: 48px; /* To hơn chút nữa */
+  color: #e0e0e0; /* Màu xám rất nhạt (Tạo phong cách chìm) */
+  font-weight: 600;
+  margin-bottom: 20px;
+  line-height: 1;
+  transition: color 0.3s ease;
+}
+
+/* Khi hover vào thẻ thì số đổi màu */
+.skill-item:hover .skill-num {
+  color: #000; /* Số chuyển sang màu đen nổi bật */
+}
+
+/* Tiêu đề Skill (h3) */
+.skill-item h3 {
+  font-size: 20px;
+  margin-bottom: 12px;
+  font-weight: 700;
+  color: #222;
+}
+
+/* Text mô tả skill */
+.skill-item .muted {
+  font-size: 14px;
+  line-height: 1.6;
+  color: #666;
+}
+
+/* --- RESPONSIVE (Cho điện thoại) --- */
+@media (max-width: 768px) {
+  .skills-section {
+    grid-template-columns: 1fr; /* Về 1 cột */
+    gap: 40px;
+  }
+  
+  .skills-right.grid-2 {
+    grid-template-columns: 1fr; /* Skill xếp dọc hết */
+    gap: 15px;
+  }
+
+  .skill-item {
+    padding: 20px; /* Giảm padding trên mobile */
+  }
+}
+
+/* --- EXERCISES SECTION --- */
+/* --- EXERCISES SECTION (Giao diện 2 cột) --- */
+
+/* 1. Giữ layout chia đôi màn hình (Trái: Title, Phải: List) */
+.exercises-section {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 60px;
+  padding: 80px 0;
+}
+
+/* Text mô tả chạy chữ (giữ nguyên code cũ của bạn) */
+.ex-left .muted {
+  min-height: 80px; 
+  display: block;
+}
+
+/* 2. MENU LIST: Chuyển thành lưới 2 cột */
+.weeks-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr; /* Chia 2 cột đều nhau */
+  gap: 20px; /* Khoảng cách giữa các ô */
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+/* 3. ITEM (Từng ô bài tập) */
+.weeks-list li {
+  padding: 24px;
+  
+  /* Thay vì chỉ kẻ vạch trên/dưới, giờ ta đóng khung toàn bộ */
+  border: 1px solid #dcdcdc; 
+  border-radius: 12px;
+  
+  background-color: transparent;
+  transition: all 0.3s ease;
+  height: 100%; /* Để các ô cao bằng nhau */
+  
+  /* Để nội dung bên trong được phân bố đẹp */
+  display: flex;
+  flex-direction: column;
+}
+
+/* Hiệu ứng khi di chuột vào ô */
+.weeks-list li:hover {
+  background-color: #fff; /* Nền trắng */
+  border-color: transparent; /* Ẩn viền đi */
+  transform: translateY(-5px); /* Nổi lên */
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); /* Đổ bóng xịn */
+}
+
+/* (Xóa bỏ đoạn code li:last-child cũ vì giờ ô nào cũng giống ô nào) */
+
+/* 4. HEAD (Tuần + Ngày) */
+.week-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 15px;
+  padding-bottom: 10px;
+  border-bottom: 1px dashed #eee; /* Kẻ nét đứt mờ ngăn cách tiêu đề và link */
+}
+
+.week-head strong {
+  font-size: 18px;
+  font-weight: 700;
+  color: #222;
+}
+
+.date {
+  font-weight: 600;
+  font-size: 14px;
+  color: #999;
+}
+
+/* 5. LINK BÀI TẬP */
+.ex-link {
+  display: block;
+  width: fit-content;
+  margin-top: 8px; /* Cách nhau ra 1 chút */
+  font-size: 15px;
+  color: #555;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.ex-link:hover {
+  color: #007bff;
+  transform: translateX(5px);
+}
+
+/* --- RESPONSIVE --- */
+/* Khi màn hình nhỏ (Tablet/Mobile), tự động về lại 1 cột cho dễ đọc */
+@media (max-width: 900px) {
+  .exercises-section {
+    grid-template-columns: 1fr; /* Layout chính về 1 cột */
+    gap: 40px;
+  }
+  
+  .weeks-list {
+    grid-template-columns: 1fr; /* List bài tập cũng về 1 cột */
+  }
+}
+
+/* --- EVENTS SECTION (Đã nâng cấp) --- */
+
+/* 1. Xử lý đoạn văn chạy chữ (Giữ khung không bị giật) */
+.events-left .muted {
+  min-height: 80px;
+  display: block;
+}
+
+/* 2. Layout chia cột chính */
+.events-section {
+  display: grid;
+  grid-template-columns: 0.8fr 2.2fr; /* Cột trái nhỏ, cột phải to */
+  gap: 40px;
+  padding: 80px 0;
+}
+
+/* 3. Lưới chứa các Card */
+.cards-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* Mặc định 3 cột */
+  gap: 24px;
+}
+
+/* 4. Thẻ Card (Thêm hiệu ứng Hover xịn) */
+.event-card {
+  background: var(--card-bg);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column; /* Để xếp nội dung dọc */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
+  overflow: hidden; /* Cần thiết để crop ảnh khi zoom */
+  height: 100%; /* Giúp các card cao bằng nhau */
+}
+
+/* Khi hover vào card: Nổi lên + Bóng đậm */
+.event-card:hover { 
+  transform: translateY(-8px); 
+  box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* 5. Ảnh Thumbnail (Thêm hiệu ứng Zoom) */
+.event-thumb {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 8px;
+  margin-bottom: 16px;
+  transition: transform 0.5s ease; /* Zoom mượt trong 0.5s */
+}
+
+/* Khi hover vào Card thì Ảnh tự zoom lên */
+.event-card:hover .event-thumb {
+  transform: scale(1.05);
+}
+
+/* 6. Typography trong Card */
+.event-card h4 { 
+  font-size: 18px; 
+  margin-bottom: 4px; 
+  color: #222;
+}
+
+.meta { 
+  font-size: 13px; 
+  font-weight: 600; 
+  color: #999; 
+  margin-bottom: 10px; 
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.event-card .muted { 
+  font-size: 14px; 
+  margin-bottom: 20px; 
+  flex-grow: 1; /* Đẩy nút Details xuống đáy */
+  line-height: 1.5;
+  color: #666;
+}
+
+/* 7. Nút Details (Đổi từ gạch chân sang mũi tên trượt) */
+.details {
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  text-decoration: none; /* Bỏ gạch chân */
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  transition: all 0.3s ease;
+  margin-top: auto; /* Luôn nằm dưới cùng */
+}
+
+/* Tạo mũi tên giả */
+.details::after {
+  content: '→';
+  transition: margin-left 0.3s ease;
+}
+
+/* Hover vào nút: Đổi màu xanh + Mũi tên trượt */
+.details:hover {
+  color: #007bff; 
+  gap: 10px;
+}
+
+/* --- RESPONSIVE (Tự động chỉnh cột trên màn hình nhỏ) --- */
+
+/* Tablet & Laptop nhỏ (Dưới 1024px) -> Chuyển thành 2 cột */
+@media (max-width: 1024px) {
+  .cards-row {
+    grid-template-columns: 1fr 1fr; 
+  }
+}
+
+/* Mobile (Dưới 768px) -> Chuyển thành 1 cột dọc */
+@media (max-width: 768px) {
+  .events-section {
+    grid-template-columns: 1fr; /* Layout chính về 1 cột */
+    gap: 40px;
+  }
+  
+  .cards-row {
+    grid-template-columns: 1fr; /* Card xếp dọc */
+  }
+  
+  .event-card {
+    max-width: 100%; /* Full màn hình mobile */
+  }
+}
+
+/* --- FOOTER --- */
+.site-footer {
+  background: #111;
+  color: #fff;
+  padding: 40px 0;
+}
+
+.footer-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-sep {
+  width: 100%;
+  border: 0;
+  border-top: 1px solid #333;
+}
+.center { flex: 1; padding: 0 40px; }
+
+.contact { font-weight: 600; margin-right: 20px; }
+
+.footer-icons { display: flex; gap: 10px; }
+.footer-icons .circle {
+  width: 40px;
+  height: 40px;
+  border: 1px solid #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+}
+.footer-icons .circle:hover { background: #fff; color: #000; }
+
+.footer-icons .circle svg {
+  width: 18px;  /* Kích thước icon */
+  height: 18px;
+  fill: currentColor; /* QUAN TRỌNG: Lấy màu theo thuộc tính color của thẻ cha */
+  transition: all 0.3s ease;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 900px) {
+  .site-title { font-size: 40px; }
+  .header-inner { flex-direction: column; align-items: flex-start; gap: 20px; }
+  .main-nav { gap: 20px; flex-wrap: wrap; }
+  
+  .intro-section { flex-direction: column; }
+  .intro-right { justify-content: flex-start; margin-top: 20px; }
+  
+  .skills-section, .exercises-section, .events-section {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  
+  .cards-row {
+    grid-template-columns: 1fr; /* Mobile hiển thị 1 cột dọc */
+  }
+}
